@@ -2,25 +2,46 @@
 	import { onMount } from 'svelte'
 	import type { PageProps } from './$types'
 
-	import { FormCellType, type CellValue, type FormCell } from '$lib/types'
+	import {
+		FormCellType,
+		type CellValue,
+		type FormCell,
+		type FormColumn,
+		type FormRow,
+		type TransactionItem
+	} from '$lib/types'
 	import { calculateCellFormula, calculateCellSum } from '$lib/grid'
 
 	let { data }: PageProps = $props()
 
 	let formCells: FormCell[] = data.cells
+	let formRows: FormRow[] = data.rows
+	let formColumns: FormColumn[] = data.columns
+	let transactions: TransactionItem[] = data.transactions
 	let formTitle: string = data.title
 
 	const maxX = Math.max(...formCells.map((c) => c.x))
 	const maxY = Math.max(...formCells.map((c) => c.y))
 
+	// Create cell values grid, and prepopulate with values from database if possible
 	const cellValues: CellValue[][] = $state([])
 	for (let y = 0; y <= maxY; y++) {
 		cellValues[y] = []
 		for (let x = 0; x <= maxX; x++) {
 			const cell = formCells.find((c) => c.x === x && c.y === y)
-			if (cell) {
-				cellValues[y][x] = { value: '0', cell }
+			if (!cell) continue
+
+			let value = ''
+
+			const typ = cell.transactionType || formRows[y]?.transactionType
+			const src = cell.transactionSource || formColumns[x]?.transactionSource
+
+			if (typ && src) {
+				const trsc = transactions.find((t) => t.src.id == src.id && t.type.id == typ.id)
+				if (trsc) value = trsc.value
 			}
+
+			cellValues[y][x] = { value: value, cell }
 		}
 	}
 
@@ -86,7 +107,7 @@
 
 		// Example listener for debugging
 		document.addEventListener('cellchange', (ev) => {
-			console.log('Cell changed', ev.detail.alias)
+			console.log('Cell changed', (ev as CustomEvent).detail.alias)
 		})
 	})
 
@@ -94,11 +115,6 @@
 </script>
 
 <h1 class="mb-4 text-2xl font-bold">{formTitle}</h1>
-
-<ul class="my-4">
-	<li>maxX: {maxX}</li>
-	<li>maxY: {maxY}</li>
-</ul>
 
 <hr />
 
@@ -113,14 +129,18 @@
 				<tr>
 					<th></th>
 					{#each { length: maxX + 1 }, x}
-						<th>{String.fromCharCode(65 + x)}</th>
+						<th>
+							{formColumns[x].title || formColumns[x].transactionSource?.title || 'N/A'}
+						</th>
 					{/each}
 				</tr>
 			</thead>
 			<tbody>
 				{#each { length: maxY + 1 }, y}
 					<tr>
-						<th class="dark:text-stone-400">{y + 1}</th>
+						<th class="dark:text-stone-400">
+							{formRows[y].title || formRows[y].transactionType?.title || (y + 1).toString()}
+						</th>
 						{#each { length: maxX + 1 }, x}
 							{@const cell = formCells.find((c) => c.x == x && c.y == y)}
 							<td class="align-top">
@@ -129,17 +149,17 @@
 										{#if cell.type == FormCellType.INPUT}
 											<input
 												type="text"
-												class="input"
-												placeholder={cell.alias}
+												class="input text-right"
 												bind:value={cellValues[y][x].value}
-												oninput={(e) => handleCellChange(x, y, e.target.value)}
-												onchange={(e) => handleCellChange(x, y, e.target.value)}
+												oninput={(e) =>
+													handleCellChange(x, y, (e.target as HTMLInputElement).value)}
+												onchange={(e) =>
+													handleCellChange(x, y, (e.target as HTMLInputElement).value)}
 											/>
 										{:else if [FormCellType.STATIC, FormCellType.SUM, FormCellType.FORMULA].includes(cell.type)}
 											<input
 												type="text"
-												placeholder={cell.alias}
-												class="input input-ghost"
+												class="input input-ghost text-right"
 												value={cellValues[y][x].value}
 												disabled
 											/>
@@ -161,6 +181,10 @@
 	<hr />
 
 	<ul class="my-4">
-		<li>cellValues: {JSON.stringify(cellValues)}</li>
+		<li>
+			cellValues: {JSON.stringify(
+				cellValues.map((row) => row.map((c) => ({ x: c.cell.x, y: c.cell.y, val: c.value })))
+			)}
+		</li>
 	</ul>
 {/if}

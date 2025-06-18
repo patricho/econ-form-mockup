@@ -1,10 +1,3 @@
-export enum FormCellType {
-	INPUT,
-	STATIC,
-	SUM,
-	FORMULA
-}
-
 export type TransactionSource = {
 	id: number
 	title: string
@@ -13,6 +6,13 @@ export type TransactionSource = {
 export type TransactionType = {
 	id: number
 	title: string
+}
+
+export enum FormCellType {
+	INPUT,
+	STATIC,
+	SUM,
+	FORMULA
 }
 
 export type FormCell = {
@@ -31,4 +31,28 @@ export type FormCell = {
 export type CellValue = {
 	value: string
 	cell: FormCell
+}
+
+export type TransactionItem = {
+	type: TransactionType
+	src: TransactionSource
+	value: string
+}
+
+export type FormItem = {
+	title: string
+	rows: FormRow[]
+	columns: FormColumn[]
+	cells: FormCell[]
+	transactions: TransactionItem[]
+}
+
+export type FormRow = {
+	title?: string
+	transactionType?: TransactionType
+}
+
+export type FormColumn = {
+	title?: string
+	transactionSource?: TransactionSource
 }

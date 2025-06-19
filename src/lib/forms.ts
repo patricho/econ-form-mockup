@@ -57,7 +57,7 @@ export const forms: Record<string, FormItem> = {
             { x: 2, y: 0, alias: 'C1', type: FormCellType.SUM, transactionType: ttSalary, transactionSource: tsReques, dependencies: ['A1', 'B1'] } as FormCell,
 
             { x: 0, y: 1, alias: 'A2', type: FormCellType.INPUT, transactionType: ttPayrol, transactionSource: tsFullCo } as FormCell,
-            { x: 1, y: 1, alias: 'B2', type: FormCellType.FORMULA, transactionType: ttPayrol, transactionSource: tsCoFund, dependencies: ['A1', 'A2', 'B1'], formula: `Math.round(({A1}+{B1})*0.5-{A2})`, } as FormCell,
+            { x: 1, y: 1, alias: 'B2', type: FormCellType.FORMULA, transactionType: ttPayrol, transactionSource: tsCoFund, dependencies: ['A1', 'A2', 'B1'], formula: `({A2} / ( {A1} + {B1} ) > 0.5) ? Math.round(( {A1} + {B1} ) * 0.5 - {A2}) : 0`, } as FormCell,
             { x: 2, y: 1, alias: 'C2', type: FormCellType.SUM, transactionType: ttPayrol, transactionSource: tsReques, dependencies: ['A2', 'B2'] } as FormCell,
             { x: 3, y: 1, alias: 'D2', type: FormCellType.FORMULA, transactionType: ttPayrol, transactionSource: tsCondit, dependencies: ['C1', 'C2'], formula: `Math.round({C2}/{C1}*100)` } as FormCell,
 

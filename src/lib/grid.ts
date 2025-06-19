@@ -35,6 +35,10 @@ export function calculateCellFormula(
 ): string {
 	if (!cell.formula) return '0'
 
+	// Dummy assignments so Vite won't remove SUM and AVG from the build bundle...
+	const s = SUM(1, 2, 3, 4)
+	const a = AVG(1, 2, 3, 4)
+
 	// Validate formula syntax before processing
 	if (!validateFormula(cell.formula)) {
 		console.error('Invalid formula syntax:', cell.formula)

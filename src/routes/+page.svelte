@@ -10,10 +10,11 @@
 			<div class="card-body">
 				<h2 class="card-title">{form.title}</h2>
 				<p class="text-base-content/70">
-					{form.cells?.length || 0} cells, {form.rows?.length || 0} rows, {form.columns?.length || 0} columns
+					{form.cells?.length || 0} cells, {form.rows?.length || 0} rows, {form.columns?.length ||
+						0} columns
 				</p>
 				<div class="card-actions justify-end">
-					<a href="/form/{formId}" class="btn btn-primary">Open Form</a>
+					<a href="form/{formId}" class="btn btn-primary">Open Form</a>
 				</div>
 			</div>
 		</div>

@@ -9,8 +9,8 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-			pages: 'dist',
-			assets: 'dist',
+			pages: 'docs',
+			assets: 'docs',
 			fallback: undefined,
 			precompress: false,
 			strict: true

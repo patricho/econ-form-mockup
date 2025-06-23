@@ -15,6 +15,7 @@
 				</p>
 				<div class="card-actions justify-end">
 					<a href="form/{formId}" class="btn btn-primary">Open Form</a>
+					<!-- <a href="edit/{formId}" class="btn btn-secondary">Edit Form</a> -->
 				</div>
 			</div>
 		</div>

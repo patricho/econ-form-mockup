@@ -39,6 +39,8 @@
 			if (typ && src) {
 				const trsc = transactions.find((t) => t.src.id == src.id && t.type.id == typ.id)
 				if (trsc) value = trsc.value
+			} else if (!!cell.value) {
+				value = cell.value
 			}
 
 			cellValues[y][x] = { value: value, cell }
@@ -156,13 +158,15 @@
 												onchange={(e) =>
 													handleCellChange(x, y, (e.target as HTMLInputElement).value)}
 											/>
-										{:else if [FormCellType.STATIC, FormCellType.SUM, FormCellType.FORMULA].includes(cell.type)}
+										{:else if [FormCellType.SUM, FormCellType.FORMULA].includes(cell.type)}
 											<input
 												type="text"
 												class="input input-ghost text-right"
 												value={cellValues[y][x].value}
 												disabled
 											/>
+										{:else if [FormCellType.STATIC].includes(cell.type)}
+											{cellValues[y][x].value}
 										{:else}
 											wtf
 										{/if}

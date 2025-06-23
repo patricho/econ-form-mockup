@@ -1,9 +1,9 @@
 import {
-	FormCellType,
-	type FormCell,
-	type FormItem,
-	type TransactionSource,
-	type TransactionType
+    FormCellType,
+    type FormCell,
+    type FormItem,
+    type TransactionSource,
+    type TransactionType
 } from './types'
 
 export const ttSalary: TransactionType = { id: 1, title: 'Salary costs' }
@@ -31,21 +31,21 @@ export const tsTestF: TransactionSource = { id: 6, title: 'F' }
 
 // prettier-ignore
 export const forms: Record<string, FormItem> = {
-    "test1": {
-        title: "POC Test Form 1",
+    'test1': {
+        title: 'POC Test Form 1',
         rows: [
-            { title: "1", transactionType: ttSalary, },
-            { title: "2", transactionType: ttPayrol, },
-            { title: "3", transactionType: ttOtherC, },
-            { title: "4", transactionType: ttDirect, },
+            { title: '1', transactionType: ttSalary, },
+            { title: '2', transactionType: ttPayrol, },
+            { title: '3', transactionType: ttOtherC, },
+            { title: '4', transactionType: ttDirect, },
         ],
         columns: [
-            { title: "A", transactionSource: tsTestA },
-            { title: "B", transactionSource: tsTestB },
-            { title: "C", transactionSource: tsTestC },
-            { title: "D", transactionSource: tsTestD },
-            { title: "E", transactionSource: tsTestE },
-            { title: "F", transactionSource: tsTestF },
+            { title: 'A', transactionSource: tsTestA },
+            { title: 'B', transactionSource: tsTestB },
+            { title: 'C', transactionSource: tsTestC },
+            { title: 'D', transactionSource: tsTestD },
+            { title: 'E', transactionSource: tsTestE },
+            { title: 'F', transactionSource: tsTestF },
         ],
         cells: [
             { x: 0, y: 0, alias: 'A1', type: FormCellType.INPUT } as FormCell,
@@ -76,8 +76,8 @@ export const forms: Record<string, FormItem> = {
         ]
 
     } as FormItem,
-    "31371": {
-        title: "Test Form 31371",
+    '31371': {
+        title: 'Test Form 31371',
         rows: [
             { transactionType: ttSalary, },
             { transactionType: ttPayrol, },
@@ -145,6 +145,74 @@ export const forms: Record<string, FormItem> = {
             { type: ttSalary, src: tsFullCo, value: '111' }, // A1
             { type: ttSalary, src: tsCoFund, value: '222' }, // B1
             { type: ttSalary, src: tsReques, value: '333' }, // C1
+        ],
+    },
+    '31375': {
+        title: 'Test Form 31375',
+        rows: [
+            /* 0 */ { title: 'Ingående balansposter', },
+            /* 1 */ { title: 'INCOME' },
+            /* 2 */ { title: 'Intäkter av anslag', },
+            /* 3 */ { title: 'Intäkter av avgifter och andra ersättningar' },
+            /* 4 */ { title: 'Intäkter av externa användaravgifter', },
+            /* 5 */ { title: 'Bidrag, exkl. bidrag från KTH' },
+            /* 6 */ { title: 'Bidrag SFO, transfererade från KTH' },
+            /* 7 */ { title: 'Periodiserade bidrag (överskott/oförbrukat=kreditbelopp)' },
+            /* 8 */ { title: 'Finansiella intäkter' },
+            /* 9 */ { title: 'SUM INCOME' },
+            /* 10 */ { title: 'Information' },
+            /* 11 */ { title: 'COST' },
+            /* 12 */ { title: 'Personalkostnader', },
+            /* 13 */ { title: 'Lokalkostnader', },
+            /* 14 */ { title: 'Övriga driftskostnader', },
+            /* 15 */ { title: 'Indirekta kostnader', },
+            /* 16 */ { title: 'Finansiella kostnader', },
+            /* 17 */ { title: 'Avskrivningar och nedskrivningar', },
+            /* 18 */ { title: 'SUM COST', },
+            /* 19 */ { title: 'BALANCE', },
+            /* 20 */ { title: 'Framtida avskrivningskostnader', },
+            /* 21 */ { title: 'KVAR ATT DISPONERA', },
+            /* 10 */ { title: 'Information' },
+            /* 22 */ { title: 'TRANSFERERINGAR', },
+            /* 23 */ { title: 'Medel som erhållits fr statens budget för finansiering av bidrag' },
+            /* 24 */ { title: 'Övriga medel som erhållits för finansieringer av bidrag' },
+            /* 25 */ { title: 'Lämnade bidrag' },
+            /* 26 */ { title: 'SUM' },
+        ],
+        columns: [
+            { title: 'Unit' },
+        ],
+        cells: [
+            { x: 0, y: 0, alias: 'A1', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 1, alias: 'A2', type: FormCellType.STATIC, value: '' } as FormCell,
+            { x: 0, y: 2, alias: 'A3', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 3, alias: 'A4', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 4, alias: 'A5', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 5, alias: 'A6', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 6, alias: 'A7', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 7, alias: 'A8', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 8, alias: 'A9', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 9, alias: 'A10', type: FormCellType.SUM, dependencies: ['A3', 'A4', 'A5', 'A6', 'A7', 'A8', 'A9'], } as FormCell,
+            { x: 0, y: 10, alias: 'A11', type: FormCellType.STATIC, value: 'Information...' } as FormCell,
+            { x: 0, y: 11, alias: 'A12', type: FormCellType.STATIC, value: '' } as FormCell,
+            { x: 0, y: 12, alias: 'A13', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 13, alias: 'A14', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 14, alias: 'A15', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 15, alias: 'A16', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 16, alias: 'A17', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 17, alias: 'A18', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 18, alias: 'A19', type: FormCellType.SUM, dependencies: ['A13', 'A14', 'A15', 'A16', 'A17', 'A18'], } as FormCell,
+            { x: 0, y: 19, alias: 'A20', type: FormCellType.FORMULA, dependencies: ['A10', 'A19'], formula: `{A10}-{A19}` } as FormCell,
+            { x: 0, y: 20, alias: 'A21', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 21, alias: 'A22', type: FormCellType.FORMULA, dependencies: ['A1', 'A8', 'A20', 'A21'], formula: `{A1} - {A8} + {A20} - {A21} ` } as FormCell,
+            { x: 0, y: 22, alias: 'A23', type: FormCellType.STATIC, value: 'Information...' } as FormCell,
+            { x: 0, y: 23, alias: 'A24', type: FormCellType.STATIC, value: '' } as FormCell,
+            { x: 0, y: 24, alias: 'A25', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 25, alias: 'A26', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 26, alias: 'A27', type: FormCellType.INPUT, } as FormCell,
+            { x: 0, y: 27, alias: 'A28', type: FormCellType.SUM, dependencies: ['A25', 'A26', 'A27'] } as FormCell,
+        ],
+        transactions: [
         ],
     },
 }
